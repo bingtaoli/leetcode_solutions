@@ -79,7 +79,6 @@ int main(){
     node5.right = &node7;
     Codec c;
     string a = c.serialize(&node1);
-    // 存在内存泄露，:(
     TreeNode *root = c.deserialize(a);
     printf("%d\n", root->val);
     destroy_tree(root);

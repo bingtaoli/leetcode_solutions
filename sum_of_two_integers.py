@@ -32,22 +32,23 @@ class Solution(object):
         :type b: int
         :rtype: int
         """
-        x = a
-        y = b
         result = 0
         carry = 0
+        MASK = 0x100000000  # 4294967296 = 2 ** 32
+        MAX_INT = 0x7FFFFFFF
+        MIN_INT = 0x80000000
         while True:
-            result = x ^ y
-            carry = (x & y) << 1
-            x = result
-            y = carry
-            if y == 0:
+            result = (a ^ b) % MASK
+            carry = ((a & b) << 1) % MASK
+            a = result
+            b = carry
+            if b == 0:
                 break
-        return result
+        return result if result < MAX_INT else ~((result % MIN_INT) ^ MAX_INT)
 
 
 if __name__ == '__main__':
     s = Solution()
     print s.getSum(17, 5)
     print s.getSum(18, 12)
-    
+    print s.getSum(-18, 12)

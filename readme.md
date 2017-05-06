@@ -27,3 +27,71 @@ return 0;
 
 > delete一个指针之后，只是回收指针指向位置的空间，而指针本身的值不变（也就是说还是指向那个地址的）。你需要手工将其赋值为NULL。
 
+### sum of two integers
+
+不使用`+`和`-`号实现相加。
+
+这个查看别人博客的思路是使用与和或实现，自己写出来后发现在leetcode上评测是超时，看了下网上的正解，使用了MASK来防止整数的overflow。代码如下，我目前也无法理解为什么最后一句可以起作用。
+
+```py
+MASK = 0x100000000  # 4294967296 = 2 ** 32
+MAX_INT = 0x7FFFFFFF
+MIN_INT = 0x80000000
+while True:
+    result = (a ^ b) % MASK
+    carry = ((a & b) << 1) % MASK
+    a = result
+    b = carry
+    if b == 0:
+        break
+return result if result < MAX_INT else ~((result % MIN_INT) ^ MAX_INT)
+```
+
+### 反转二叉树
+
+题目如下：
+
+```
+Invert a binary tree.
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+
+to
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
+
+PS: Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
+
+这个题目的解法比较简单，就是递归把root的left和right对换下。
+
+```py
+def invertTree(self, root):
+    """
+    :type root: TreeNode
+    :rtype: TreeNode
+    """
+    if root is None:
+        return
+    tmp = root.left
+    root.left = root.right
+    root.right = tmp
+    self.invertTree(root.left)
+    self.invertTree(root.right)
+    return root
+```
+
+当时这个问题真的很火，homebrew的作者在google面试中因为不会反转二叉树而被拒，然后国内一群大佬程序员纷纷晒解法。
+
+比如@左耳耗子：
+
+<img src='medias/invert_binary_tree_chenhao.png'>
+

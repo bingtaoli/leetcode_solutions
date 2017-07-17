@@ -95,3 +95,32 @@ def invertTree(self, root):
 
 <img src='medias/invert_binary_tree_chenhao.png'>
 
+### BinaryTreePaths
+
+题目就是求深度优先遍历的路径。
+
+低效率版本是我自己写的，虽然accept了，但是效率不高。使用深度遍历，每到一个node都有之前的path，如果这个node是空的，则把path加入到结果中，这个方法存在很多复制，效率不高。如`BinaryTreePaths/BinaryTreePaths.cpp`中的一样。
+
+高效点的方式呢？看到discuss中`https://discuss.leetcode.com/topic/21447/c-simple-4ms-recursive-solution`的解法，不使用vector，效率提高很多。
+
+```cpp
+void binaryTreePaths(vector<string>& result, TreeNode* root, string t) {
+    if(!root->left && !root->right) {
+        result.push_back(t);
+        return;
+    }
+
+    if(root->left) binaryTreePaths(result, root->left, t + "->" + to_string(root->left->val));
+    if(root->right) binaryTreePaths(result, root->right, t + "->" + to_string(root->right->val));
+}
+
+vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> result;
+    if(!root) return result;
+    
+    binaryTreePaths(result, root, to_string(root->val));
+    return result;
+}
+```
+
+经过测试，这个效率依旧不高。

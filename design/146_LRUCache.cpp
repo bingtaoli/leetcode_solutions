@@ -156,7 +156,7 @@ public:
             if (size > capacity)
             {
                 DoubleLinkedNode* res = g_list.removeOldest();
-                g_map[res->key] = NULL;
+                g_map.erase(res->key);
                 size--;
             }
             g_map[key] = node;

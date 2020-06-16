@@ -27,7 +27,7 @@
  */
 class Solution {
 public:
-	void inorder_(TreeNode* root, std::vector<int> path)
+	void inorder_(TreeNode* root, std::vector<int> &path)
 	{
 		if (!root)
 		{
